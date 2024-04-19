@@ -1,1 +1,0 @@
-# Pokedex with React Native

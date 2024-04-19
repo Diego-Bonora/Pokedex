@@ -1,12 +1,12 @@
 import React from "react";
 import { Text } from "react-native"
 
-function Favorite() {
+function Pokemon() {
     return (
         <>
-            <Text>Favorite</Text>
+            <Text>Pokemooon</Text>
         </>
     );
 }
 
-export { Favorite }
+export { Pokemon }
