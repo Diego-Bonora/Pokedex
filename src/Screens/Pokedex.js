@@ -1,6 +1,6 @@
 import React from "react";
-import { Text } from "react-native"
 import { getPokemonsApi, getPokemonDetailsByUrlApi } from "../api/pokemon";
+import { PokemonList } from "../components/PokemonList";
 
 function Pokedex() {
     const [pokemons, setPokemons] = React.useState([])
@@ -35,7 +35,7 @@ function Pokedex() {
 
     return (
         <>
-            <Text>Pokedex</Text>
+            <PokemonList pokemons={pokemons} />
         </>
     );
 }
