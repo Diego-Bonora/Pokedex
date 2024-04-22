@@ -37,7 +37,7 @@ function Navigation() {
                 }}
             />
             <Tab.Screen
-                name="Pokedex"
+                name="MainPokedex"
                 component={PokedexNavigation}
                 options={{
                     tabBarLabel: "",

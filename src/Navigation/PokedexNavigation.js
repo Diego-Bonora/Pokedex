@@ -12,8 +12,8 @@ function PokedexNavigation() {
                 headerTitleAlign: 'center', // This centers the title horizontally
             }}
         >
-            <Stack.Screen name="Pokedex " component={Pokedex} />
-            <Stack.Screen name="Pokemon " component={Pokemon} />
+            <Stack.Screen name="Pokedex" component={Pokedex} options={{ headerShown: false }} />
+            <Stack.Screen name="Pokemon" component={Pokemon} options={{ title: "", headerTransparent: true }} />
         </Stack.Navigator>
     );
 };

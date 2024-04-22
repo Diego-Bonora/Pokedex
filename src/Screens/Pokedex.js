@@ -1,20 +1,24 @@
 import React from "react";
-import { getPokemonsApi, getPokemonDetailsByUrlApi } from "../api/pokemon";
+import { getPokemonsApi, getPokemonDetailsByUrlApi } from "../api/pokemonApi";
 import { PokemonList } from "../components/PokemonList";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function Pokedex() {
     const [pokemons, setPokemons] = React.useState([])
+    const [netxUrl, setNextUrl] = React.useState(null)
+    const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         (async () => {
             await loadPokemons();
         })()
-    }, [])
+    }, [loadPokemons])
 
-    console.log(pokemons)
-    const loadPokemons = async () => {
+    const loadPokemons = React.useCallback(async () => {
         try {
-            const respone = await getPokemonsApi();
+            setLoading(true);
+            const respone = await getPokemonsApi(netxUrl);
+            setNextUrl(respone.next)
 
             const pokemonsArray = []
             for await (const pokemon of respone.results) {
@@ -30,13 +34,20 @@ function Pokedex() {
             setPokemons([...pokemons, ...pokemonsArray])
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
-    };
+    }, [pokemons, netxUrl]);
 
     return (
-        <>
-            <PokemonList pokemons={pokemons} />
-        </>
+        <SafeAreaView>
+            <PokemonList
+                pokemons={pokemons}
+                loadPokemons={loadPokemons}
+                isNext={netxUrl}
+                isLoading={loading}
+            />
+        </SafeAreaView>
     );
 }
 

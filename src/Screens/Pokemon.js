@@ -1,12 +1,54 @@
 import React from "react";
-import { Text } from "react-native"
+import { ScrollView, ActivityIndicator, StyleSheet } from "react-native"
+import { GetPokemonDetailsByIdApi } from "../api/pokemonApi";
+import { PokemonHeader } from "../components/Pokemon/PokemonHeader";
+import { PokemonType } from "../components/Pokemon/PokemonType";
+import { PokemonStats } from "../components/Pokemon/PokemonStats";
+import Icons from 'react-native-vector-icons/FontAwesome';
 
-function Pokemon() {
+function Pokemon({ route: { params }, navigation }) {
+
+    const [pokemon, setPokemon] = React.useState(null);
+
+    React.useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => null,
+            headerLeft: () => <Icons name="arrow-left" color="#fff" size={20} style={{ marginLeft: 20 }} onPress={navigation.goBack} />
+        })
+    }, [navigation, params])
+
+    React.useEffect(() => {
+        (async () => {
+            try {
+                const respone = await GetPokemonDetailsByIdApi(params.id);
+                setPokemon(respone);
+            } catch (error) {
+                navigation.goBack();
+            }
+        })()
+    })
+
+    if (!pokemon) return (<ActivityIndicator size="large" style={styles.spinner} color="#AEAEAE" />);
+
     return (
-        <>
-            <Text>Pokemooon</Text>
-        </>
+        <ScrollView>
+            <PokemonHeader
+                name={pokemon.name}
+                order={pokemon.order}
+                image={pokemon.sprites.other['official-artwork'].front_default}
+                type={pokemon.types[0].type.name}
+            />
+            <PokemonType types={pokemon.types} />
+            <PokemonStats stats={pokemon.stats} />
+        </ScrollView>
     );
 }
+
+const styles = StyleSheet.create({
+    spinner: {
+        marginTop: 20,
+        marginBottom: 60,
+    },
+})
 
 export { Pokemon }
