@@ -1,11 +1,18 @@
 import React from "react";
-import { Text } from "react-native"
+import { Text, View } from "react-native"
+import { LoginForm } from "../components/Auth/LoginForm";
+import { UserData } from "../components/Auth/UserData";
+import { useAuth } from "../hooks/useAuth";
 
 function Account() {
+
+    const { auth } = useAuth();
+
     return (
-        <>
-            <Text>Account</Text>
-        </>
+        <View>
+            {auth ? <UserData /> : <LoginForm />}
+
+        </View>
     );
 }
 
