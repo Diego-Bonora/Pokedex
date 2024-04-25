@@ -27,6 +27,7 @@ function Navigation() {
             screenOptions={{
                 headerShown: false,
             }}
+            initialRouteName="MainPokedex"
         >
             <Tab.Screen
                 name="Favourite"
