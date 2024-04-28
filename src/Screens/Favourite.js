@@ -17,18 +17,21 @@ function Favourite() {
                 (async () => {
                     const response = await getPokemonFavouriteByUserApi(auth);
                     const pokemonsArray = []
-
-                    for await (const id of response.list) {
-                        const pokemonDetails = await GetPokemonDetailsByIdApi(id);
-                        pokemonsArray.push({
-                            id: pokemonDetails.id,
-                            name: pokemonDetails.name,
-                            type: pokemonDetails.types[0].type.name,
-                            order: pokemonDetails.order,
-                            image: pokemonDetails.sprites.other['official-artwork'].front_default
-                        })
+                    if (!response) {
+                        setPokemons([])
+                    } else {
+                        for await (const id of response.list) {
+                            const pokemonDetails = await GetPokemonDetailsByIdApi(id);
+                            pokemonsArray.push({
+                                id: pokemonDetails.id,
+                                name: pokemonDetails.name,
+                                type: pokemonDetails.types[0].type.name,
+                                order: pokemonDetails.order,
+                                image: pokemonDetails.sprites.other['official-artwork'].front_default
+                            })
+                        }
+                        setPokemons(pokemonsArray)
                     }
-                    setPokemons(pokemonsArray)
                 })()
             }
         }, [auth])

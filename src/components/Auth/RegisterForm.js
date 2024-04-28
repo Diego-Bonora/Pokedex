@@ -3,10 +3,12 @@ import { Text, Button, StyleSheet, TextInput, View, ScrollView } from "react-nat
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { addUserApi } from "../../api/users";
+import { useAuth } from "../../hooks/useAuth";
 
 function RegisterForm() {
 
     const [error, setError] = React.useState("");
+    const { login, logout } = useAuth()
 
     const formik = useFormik({
         validationSchema: Yup.object(validationSchema()),
@@ -14,7 +16,7 @@ function RegisterForm() {
         initialValues: { fisrtName: "", lastName: "", email: "", username: "", password: "" },
         onSubmit: async (initialValues) => {
             const response = await addUserApi(initialValues);
-            response ? setError(response) : console.log("all ok");;
+            response ? setError(response) : login(initialValues);
         }
     });
 
