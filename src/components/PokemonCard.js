@@ -22,14 +22,17 @@ function PokemonCard({ pokemon }) {
                     <View style={styles.spacing}>
                         <View style={bgStyles}>
                             <View style={styles.texts}>
-                                <Text style={styles.number}>#{`${pokemon.order}`.padStart(3, 0)}</Text>
                                 <Text style={styles.name}>{capitalize(pokemon.name)}</Text>
+                                <Text style={styles.number}>#{`${pokemon.order}`.padStart(3, 0)}</Text>
                             </View>
-                            <Image source={{ uri: pokemon.image }} style={styles.image} />
+                            <View style={styles.imageContainer}>
+                                <View style={styles.imageBg} />
+                                <Image source={{ uri: pokemon.image }} style={styles.image} />
+                            </View>
                         </View>
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback >
         </>
     )
 }
@@ -46,28 +49,37 @@ const styles = StyleSheet.create({
     bgStyles: {
         flex: 1,
         borderRadius: 15,
-        padding: 10
+        padding: 10,
     },
     texts: {
-        flexDirection: "row"
-    },
-    number: {
-        position: "absolute",
-        right: 10,
-        color: "white",
-        fontSize: 15,
     },
     name: {
         color: "white",
         fontWeight: "bold",
+        fontSize: 17,
+    },
+    number: {
+        color: "white",
         fontSize: 15,
     },
-    image: {
+    imageContainer: {
+        bottom: -7,
+        right: -7,
         position: "absolute",
-        bottom: 2,
-        right: 2,
-        width: 90,
-        height: 90,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    imageBg: {
+        backgroundColor: "white",
+        borderRadius: 100,
+        opacity: 0.7,
+        width: 105,
+        height: 105,
+        position: "absolute",
+    },
+    image: {
+        width: 100,
+        height: 100,
     },
 })
 

@@ -1,7 +1,7 @@
 import React from "react";
-import { Text, View } from "react-native"
-import { LoginForm } from "../components/Auth/LoginForm";
+import { View } from "react-native"
 import { UserData } from "../components/Auth/UserData";
+import { LoginRegisterMenu } from "../components/Auth/LoginRegisterMenu";
 import { useAuth } from "../hooks/useAuth";
 
 function Account() {
@@ -10,7 +10,7 @@ function Account() {
 
     return (
         <View>
-            {auth ? <UserData /> : <LoginForm />}
+            {auth ? <UserData /> : <LoginRegisterMenu />}
 
         </View>
     );

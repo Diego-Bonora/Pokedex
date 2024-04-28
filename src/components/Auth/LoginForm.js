@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, View, StyleSheet, TextInput, Button, Keyboard } from "react-native";
+import { Text, View, StyleSheet, TextInput, Button } from "react-native";
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { user, userDetails } from "../../utils/userDB";
 import { useAuth } from "../../hooks/useAuth";
+import { loginApi } from "../../api/users";
 
 function LoginForm() {
 
@@ -13,25 +13,21 @@ function LoginForm() {
     const formik = useFormik({
         validationSchema: Yup.object(validationSchema()),
         validateOnChange: false,
-        initialValues: { username: "", password: "" },
-        onSubmit: ({ username, password }) => {
-            if (username !== user.username || password !== user.password) {
-                setError("username or password incorrect")
-            } else {
-                login(userDetails)
-            }
+        initialValues: { usernameOrEmail: "", password: "" },
+        onSubmit: async (initialValues) => {
+            const response = await loginApi(initialValues);
+            response ? login(response) : setError("username or password incorrect")
         }
     });
 
     return (
         <>
-            <Text style={styles.title}>Log in</Text>
             <TextInput
-                placeholder="Username"
+                placeholder="Username or Email"
                 style={styles.input}
                 autoCapitalize="none"
-                value={formik.values.username}
-                onChangeText={(text) => formik.setFieldValue("username", text)}
+                value={formik.values.usernameOrEmail}
+                onChangeText={(text) => formik.setFieldValue("usernameOrEmail", text)}
             />
             <Text style={styles.errors}>{formik.errors.username}</Text>
             <TextInput
@@ -54,19 +50,12 @@ function LoginForm() {
 
 function validationSchema() {
     return {
-        username: Yup.string().required("Username is needed"),
+        usernameOrEmail: Yup.string().required("Username or Email is needed"),
         password: Yup.string().required("password is needed"),
     }
 }
 
 const styles = StyleSheet.create({
-    title: {
-        textAlign: "center",
-        fontSize: 28,
-        fontWeight: "bold",
-        marginTop: 50,
-        marginBottom: 15,
-    },
     input: {
         height: 40,
         margin: 10,
@@ -75,11 +64,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     errors: {
-        // textAlign: "center",
         marginTop: -5,
         marginLeft: 15,
         color: "#f00",
-        // marginTop: 2,
     },
     buttonContainer: {
         marginTop: 20,
