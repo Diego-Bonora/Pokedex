@@ -2,7 +2,6 @@ import React from "react";
 import { getPokemonsApi, getPokemonDetailsByUrlApi } from "../api/pokemonApi";
 import { PokemonList } from "../components/PokemonList";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { SearchBar } from "../components/SearchBar";
 
 function Pokedex() {
     const [pokemons, setPokemons] = React.useState([])
@@ -47,7 +46,6 @@ function Pokedex() {
 
     return (
         <SafeAreaView>
-            <SearchBar searchText={searchText} setSearchText={setSearchText} />
             <PokemonList
                 pokemons={pokemons}
                 loadPokemons={loadPokemons}
