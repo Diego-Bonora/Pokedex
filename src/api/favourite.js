@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { includes, pull } from "lodash";
+import { includes, pull, find } from "lodash";
 import { FAVOURITE_STORAGE } from "../utils/constants";
 
 export async function getPokemonFavouriteApi() {
@@ -11,30 +11,46 @@ export async function getPokemonFavouriteApi() {
     }
 }
 
-export async function addPokemonFavouriteApi(id) {
+export async function addPokemonFavouriteApi(id, data) {
     try {
         const favourites = await getPokemonFavouriteApi();
-        favourites.push(id);
+        let result = find(favourites, function (obj) {
+            if (obj.username === data.username) {
+                return true;
+            }
+        });
+
+        result ? result.list.push(id) : favourites.push({ "username": data.username, "list": [id] });
         await AsyncStorage.setItem(FAVOURITE_STORAGE, JSON.stringify(favourites));
     } catch (error) {
         throw error;
     }
 }
 
-export async function isPokemonFavouriteApi(id) {
+export async function isPokemonFavouriteApi(id, data) {
     try {
-        const respone = await getPokemonFavouriteApi();
-        return includes(respone, id);
+        const response = await getPokemonFavouriteApi();
+        let result = find(response, function (obj) {
+            if (obj.username === data.username) {
+                return true;
+            }
+        });
+        return includes(result.list, id);
     } catch (error) {
         throw error;
     }
 }
 
-export async function removePokemonFavouriteApi(id) {
+export async function removePokemonFavouriteApi(id, data) {
     try {
         const favourites = await getPokemonFavouriteApi();
-        const newFavourites = pull(favourites, id)
-        await AsyncStorage.setItem(FAVOURITE_STORAGE, JSON.stringify(newFavourites));
+        let result = find(favourites, function (obj) {
+            if (obj.username === data.username) {
+                return true;
+            }
+        });
+        pull(result.list, id)
+        await AsyncStorage.setItem(FAVOURITE_STORAGE, JSON.stringify(favourites));
     } catch (error) {
         throw error;
     }

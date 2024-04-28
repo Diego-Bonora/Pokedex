@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Button, StyleSheet, TextInput, View, ScrollView } from "react-native";
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { addUserApi, getUsersApi } from "../../api/users";
+import { addUserApi } from "../../api/users";
 
 function RegisterForm() {
 
