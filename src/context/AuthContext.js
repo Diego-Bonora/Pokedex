@@ -9,6 +9,7 @@ export const AuthContext = React.createContext({
 export function AuthProvider({ children }) {
 
     const [auth, setAuth] = React.useState(undefined);
+    const [pokemons, setPokemons] = React.useState([]);
 
     const login = (userData) => {
         setAuth(userData);
@@ -16,9 +17,12 @@ export function AuthProvider({ children }) {
 
     const logout = () => {
         setAuth(undefined)
+        setPokemons([])
     }
 
     const valueContext = {
+        pokemons,
+        setPokemons,
         auth,
         login,
         logout,

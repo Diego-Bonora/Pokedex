@@ -8,8 +8,8 @@ import { NotLogged } from "../components/NotLogged";
 
 function Favourite() {
 
-    const [pokemons, setPokemons] = React.useState([]);
-    const { auth } = useAuth();
+    // const [pokemons, setPokemons] = React.useState([]);
+    const { auth, pokemons, setPokemons } = useAuth();
 
     useFocusEffect(
         React.useCallback(() => {
@@ -17,9 +17,7 @@ function Favourite() {
                 (async () => {
                     const response = await getPokemonFavouriteByUserApi(auth);
                     const pokemonsArray = []
-                    if (!response) {
-                        setPokemons([])
-                    } else {
+                    if (response) {
                         for await (const id of response.list) {
                             const pokemonDetails = await GetPokemonDetailsByIdApi(id);
                             pokemonsArray.push({
