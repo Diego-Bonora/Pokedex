@@ -61,7 +61,7 @@ function RegisterForm() {
             />
             <Text style={styles.errors}>{formik.errors.password}</Text>
             <View style={styles.buttonContainer}>
-                <Button title="Log in" onPress={formik.handleSubmit} />
+                <Button title="Register" onPress={formik.handleSubmit} />
             </View>
             <Text style={styles.errorInRegister}>{error}</Text>
         </ScrollView>

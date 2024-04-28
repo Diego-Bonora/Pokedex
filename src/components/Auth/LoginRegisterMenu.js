@@ -10,8 +10,8 @@ function LoginRegisterMenu() {
     return (
         <>
             <View style={styles.titleContainer}>
-                <Text style={{ color: pageLogin ? "blue" : "black", ...styles.title }} onPress={() => setPageLogin(true)}>Log in</Text>
-                <Text style={{ color: pageLogin ? "black" : "blue", ...styles.title }} onPress={() => setPageLogin(false)}>Register</Text>
+                <Text style={{ borderColor: pageLogin ? "blue" : "black", color: pageLogin ? "blue" : "black", ...styles.title }} onPress={() => setPageLogin(true)}>Log in</Text>
+                <Text style={{ borderColor: pageLogin ? "black" : "blue", color: pageLogin ? "black" : "blue", ...styles.title }} onPress={() => setPageLogin(false)}>Register</Text>
             </View >
             <View>
                 {pageLogin ? <LoginForm /> : <RegisterForm />}
