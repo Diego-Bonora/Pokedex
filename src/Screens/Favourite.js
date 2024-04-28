@@ -8,7 +8,6 @@ import { NotLogged } from "../components/NotLogged";
 
 function Favourite() {
 
-    // const [pokemons, setPokemons] = React.useState([]);
     const { auth, pokemons, setPokemons } = useAuth();
 
     useFocusEffect(
