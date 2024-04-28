@@ -11,6 +11,20 @@ export async function getPokemonFavouriteApi() {
     }
 }
 
+export async function getPokemonFavouriteByUserApi(data) {
+    try {
+        const favourites = await getPokemonFavouriteApi();
+        let result = find(favourites, function (obj) {
+            if (obj.username === data.username) {
+                return true;
+            }
+        });
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function addPokemonFavouriteApi(id, data) {
     try {
         const favourites = await getPokemonFavouriteApi();
@@ -19,7 +33,6 @@ export async function addPokemonFavouriteApi(id, data) {
                 return true;
             }
         });
-
         result ? result.list.push(id) : favourites.push({ "username": data.username, "list": [id] });
         await AsyncStorage.setItem(FAVOURITE_STORAGE, JSON.stringify(favourites));
     } catch (error) {
@@ -29,13 +42,8 @@ export async function addPokemonFavouriteApi(id, data) {
 
 export async function isPokemonFavouriteApi(id, data) {
     try {
-        const response = await getPokemonFavouriteApi();
-        let result = find(response, function (obj) {
-            if (obj.username === data.username) {
-                return true;
-            }
-        });
-        return includes(result.list, id);
+        const response = await getPokemonFavouriteByUserApi(data);
+        return includes(response.list, id);
     } catch (error) {
         throw error;
     }

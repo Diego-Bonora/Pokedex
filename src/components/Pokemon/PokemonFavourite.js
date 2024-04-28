@@ -3,6 +3,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { addPokemonFavouriteApi, isPokemonFavouriteApi, removePokemonFavouriteApi } from "../../api/favourite";
 import { useAuth } from "../../hooks/useAuth";
+import { useFocusEffect } from "@react-navigation/native";
 
 function PokemonFavourite({ id }) {
 
@@ -11,16 +12,18 @@ function PokemonFavourite({ id }) {
     const [reloadCheck, setReloadCheck] = React.useState(true);
     const Icon = isFavourite ? FontAwesome : FontAwesome5;
 
-    React.useEffect(() => {
-        (async () => {
-            try {
-                const response = await isPokemonFavouriteApi(id, auth);
-                setIsFavourite(response)
-            } catch (error) {
-                setIsFavourite(false)
-            }
-        })()
-    }, [id, reloadCheck])
+    useFocusEffect(
+        React.useCallback(() => {
+            (async () => {
+                try {
+                    const response = await isPokemonFavouriteApi(id, auth);
+                    setIsFavourite(response)
+                } catch (error) {
+                    setIsFavourite(false)
+                }
+            })()
+        }, [id, reloadCheck])
+    );
 
     const onReloadCheckFavourite = () => {
         setReloadCheck(!reloadCheck)
