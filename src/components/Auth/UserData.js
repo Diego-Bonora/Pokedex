@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { ItemMenu } from "./ItemMenu";
 import { useFocusEffect } from "@react-navigation/native";
 import { size } from "lodash";
-import { getPokemonFavouriteApi } from "../../api/favourite";
+import { getPokemonFavouriteByUserApi } from "../../api/favourite";
 
 function UserData() {
     const { auth, logout } = useAuth();
@@ -14,8 +14,8 @@ function UserData() {
         React.useCallback(() => {
             (async () => {
                 try {
-                    const respone = await getPokemonFavouriteApi();
-                    setTotal(size(respone));
+                    const response = await getPokemonFavouriteByUserApi(auth);
+                    setTotal(size(response.list));
                 } catch (error) {
                     setTotal(0)
                 }

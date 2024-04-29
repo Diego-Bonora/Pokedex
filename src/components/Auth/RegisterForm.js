@@ -58,6 +58,7 @@ function RegisterForm() {
                 placeholder="Password"
                 style={styles.input}
                 autoCapitalize="none"
+                secureTextEntry={true}
                 value={formik.values.password}
                 onChangeText={(text) => formik.setFieldValue("password", text)}
             />
