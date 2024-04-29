@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DiegoBonora-Pokedex",
-    "slug": "DiegoBonora-Pokedex",
+    "name": "Pokedex",
+    "slug": "Pokedex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "DiegoBonora.Pokedex"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +30,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "e1ddfec9-b5d8-4e61-bef7-fcac9cac9acd"
+        "projectId": "6d9b973b-adb5-4c1a-9b27-67a3ea46c86f"
       }
     }
   }
